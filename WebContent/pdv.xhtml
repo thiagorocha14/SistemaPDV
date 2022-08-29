@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+	<style>
+		h3 {
+			display: flex;
+		}
+		.right {
+			position: absolute;
+			right: 2em;
+		}
+	</style>
+</h:head> 
+<body> 
+	<h3>
+		PDV
+		<div class="right">
+			<p:commandLink action="area-interna?faces-redirect=true" value="Área Interna"/>
+		</div>
+	</h3>
+	<p:panel header="Produtos">
+		<h:form id="formProduto">
+			<p:panelGrid columns="4">
+				<p:outputLabel value="Selecione o produto:" for="prod" />
+				<p:inputText id="prod" />
+				<p:outputLabel value="Quantidade:" for="qtde"/>
+				<p:inputText id="qtde" />
+				<p:outputLabel value="Valor:" for="valor" />
+				<p:inputText id="valor" />
+				<p:outputLabel value="Total:" for="total" />
+				<p:inputText id="total" />
+				<p:commandButton styleClass="botaoVermelho" value="Adicionar produto" action="#{vendaBean.gravar()}"
+					process="formProduto" update="formProduto"/>
+			</p:panelGrid>
+		</h:form>
+	</p:panel>
+	<p:panel header="Totais">
+		<h:form id="totais">
+			<p:dataTable value="#{vendaBean.autores}" var="autorAtual" paginatorPosition="top"
+					paginator="true" rows="5" rowsPerPageTemplate="2,5,10">
+				<p:column headerText="Nome">
+					<h:outputText />
+				</p:column>
+				<p:column headerText="Nacionalidade">
+					<h:outputText />
+				</p:column>
+				<p:column headerText="Ações">
+					<p:commandButton value="editar" 
+							action="#{vendaBean.carregarAutor(autorAtual)}" 
+								process="@form" update=":formAutor"/>
+					<p:commandButton value="excluir" 
+							action="#{vendaBean.excluirAutor(autorAtual)}" 
+								process="@form" update="@form,:msg"/>			
+				</p:column>		
+			</p:dataTable>
+			
+			<p:panelGrid columns="2">
+				<p:commandButton styleClass="botaoVermelho" value="Cancelar venda" action="#{vendaBean.gravar()}"
+					process="formProduto" update="formProduto"/>
+				<p:commandButton styleClass="botaoVermelho" value="Faturar venda" action="#{vendaBean.gravar()}"
+				process="formProduto" update="formProduto"/>
+			</p:panelGrid>
+		</h:form>
+	</p:panel>
+</body> 
+</html>

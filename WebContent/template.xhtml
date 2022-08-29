@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+	<script type="text/javascript" 
+	src="#{request.contextPath}/files/js-locale-msg.js"/>
+	<link type="text/css" rel="stylesheet" 
+		href="#{request.contextPath}/files/estilo.css" />
+</h:head> 
+<body>
+<div class="pagina">
+	<div class="cabecalho"> 
+		<h1><ui:insert name="titulo"></ui:insert></h1>
+		<h:form>
+			<p:menubar>
+				<p:menuitem value="Início" icon="ui-icon-home"
+							action="index?faces-redirect=true"/>
+				<p:menuitem value="Gerenciar Produtos" icon="ui-icon-home"
+							action="produtos?faces-redirect=true"/>
+				<p:menuitem value="Relatórios" icon="ui-icon-home"
+							action="gerar-relatorio?faces-redirect=true"/>
+				<p:menuitem value="Voltar ao PDV" icon="ui-icon-home"
+							action="pdv?faces-redirect=true"/>
+			</p:menubar>	
+		</h:form>
+	</div>
+	<div class="conteudo">	
+		<ui:insert name="conteudo"></ui:insert>
+	</div>	
+</div>
+<div class="rodape">
+	<h:outputText value="Sistemas de Informação 5º período" />
+</div>	
+</body> 
+</html>
