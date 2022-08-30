@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +19,8 @@ public class Venda {
 	private String cpfCliente;
 	private Date dataVenda;
 	
-	@OneToMany(mappedBy="venda")
-	private List<ItemVenda> itens;
+	@OneToMany
+	private List<ItemVenda> itens = new ArrayList<ItemVenda>();
 	
 	@OneToOne
 	private Pagamento pagamento;
@@ -73,7 +74,7 @@ public class Venda {
 	}
 	
 	public void adicionarItem(ItemVenda I) {
-		this.itens.add(I);
+		itens.add(I);
 	}
 	
 }

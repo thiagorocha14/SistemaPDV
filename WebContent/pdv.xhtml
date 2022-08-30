@@ -25,38 +25,36 @@
 	</h3>
 	<p:panel header="Produtos">
 		<h:form id="formProduto">
-			<p:panelGrid columns="4">
-				<p:outputLabel value="Selecione o produto:" for="prod" />
-				<p:inputText id="prod" />
+			<p:panelGrid columns="7">
+				<p:outputLabel value="Selecione o produto:" for="produtos" />
+				<p:selectOneMenu id="produtos" value="#{vendaBean.idProdutoAtual}">
+					<f:selectItems value="#{vendaBean.produtos}" var="produtoAtual"
+						itemLabel="#{produtoAtual.nome}" itemValue="#{produtoAtual.id}" />
+				</p:selectOneMenu>
 				<p:outputLabel value="Quantidade:" for="qtde"/>
-				<p:inputText id="qtde" />
+				<p:inputText id="qtde" value="#{vendaBean.item.quantidade}"/>
 				<p:outputLabel value="Valor:" for="valor" />
-				<p:inputText id="valor" />
-				<p:outputLabel value="Total:" for="total" />
-				<p:inputText id="total" />
-				<p:commandButton styleClass="botaoVermelho" value="Adicionar produto" action="#{vendaBean.gravar()}"
-					process="formProduto" update="formProduto"/>
+				<p:inputText id="valor" value="#{vendaBean.item.valorUnitario}"/>
+				<p:commandButton styleClass="botaoVermelho" value="Adicionar item" action="#{vendaBean.adicionarItem()}"
+					process="formProduto" update="formProduto, :totais"/>
 			</p:panelGrid>
 		</h:form>
 	</p:panel>
 	<p:panel header="Totais">
 		<h:form id="totais">
-			<p:dataTable value="#{vendaBean.autores}" var="autorAtual" paginatorPosition="top"
-					paginator="true" rows="5" rowsPerPageTemplate="2,5,10">
-				<p:column headerText="Nome">
-					<h:outputText />
+			<p:dataTable value="#{vendaBean.venda.itens}" var="itemAtual" paginator="false">
+				<p:column headerText="Produto">
+					<h:outputText value="#{itemAtual.produto.nome}" />
 				</p:column>
-				<p:column headerText="Nacionalidade">
-					<h:outputText />
+				<p:column headerText="Quantidade">
+					<h:outputText value="#{itemAtual.quantidade}"/>
 				</p:column>
-				<p:column headerText="Ações">
-					<p:commandButton value="editar" 
-							action="#{vendaBean.carregarAutor(autorAtual)}" 
-								process="@form" update=":formAutor"/>
-					<p:commandButton value="excluir" 
-							action="#{vendaBean.excluirAutor(autorAtual)}" 
-								process="@form" update="@form,:msg"/>			
-				</p:column>		
+				<p:column headerText="Valor">
+					<h:outputText value="#{itemAtual.valorUnitario}"/>
+				</p:column>
+				<p:column headerText="Total">
+					<h:outputText value="#{itemAtual.totalItem}"/>
+				</p:column>
 			</p:dataTable>
 			
 			<p:panelGrid columns="2">
