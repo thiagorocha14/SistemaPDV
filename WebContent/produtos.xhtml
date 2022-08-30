@@ -10,7 +10,55 @@
 	<ui:define name="titulo">Produtos</ui:define>
 	
 	<ui:define name="conteudo">
-		
+		<p:growl life="5000" id="msg"/>
+		<p:panel header="Produto">
+			<h:form id="formProduto">
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Código:" for="codigo" />
+				<p:inputText id="codigo" value="#{produtoBean.produto.codigo}" />
+				<p:outputLabel value="Nome" for="nome"/>
+				<p:inputText id="nome" value="#{produtoBean.produto.nome}"/>
+				<p:outputLabel value="Descrição" for="descricao"/>
+				<p:inputText id="descricao" value="#{produtoBean.produto.descricao}"/>
+				<p:outputLabel value="Preço" for="preco"/>
+				<p:inputText id="preco" value="#{produtoBean.produto.preco}"/>
+				<p:outputLabel value="Quantidade" for="qtde"/>
+				<p:inputText id="qtde" value="#{produtoBean.produto.quantidade}"/>
+				<p:commandButton value="Gravar" action="#{produtoBean.gravar()}"
+					process="formProduto" update="formProduto,:lista, :msg"/>
+			</p:panelGrid>
+			</h:form>
+		</p:panel>	 
+		<p:panel header="Lista">
+			<h:form id="lista">
+				<p:dataTable value="#{produtoBean.produtos}" var="produtoAtual" paginatorPosition="top"
+						paginator="true" rows="5" rowsPerPageTemplate="2,5,10">
+					<p:column headerText="Código">
+						<h:outputText value="#{produtoAtual.codigo}" />
+					</p:column>
+					<p:column headerText="Nome">
+						<h:outputText value="#{produtoAtual.nome}" />
+					</p:column>
+					<p:column headerText="Descrição">
+						<h:outputText value="#{produtoAtual.descricao}" />
+					</p:column>
+					<p:column headerText="Preço">
+						<h:outputText value="#{produtoAtual.preco}" />
+					</p:column>
+					<p:column headerText="Quantidade">
+						<h:outputText value="#{produtoAtual.quantidade}" />
+					</p:column>
+					<p:column headerText="Ações">
+						<p:commandButton value="editar" 
+								action="#{produtoBean.carregarProduto(produtoAtual)}" 
+									process="@form" update=":formProduto"/>
+						<p:commandButton value="excluir" 
+								action="#{produtoBean.excluirProduto(produtoAtual)}" 
+									process="@form" update="@form,:msg"/>			
+					</p:column>
+				</p:dataTable>	
+			</h:form>
+		</p:panel>
 	</ui:define>
 
 
