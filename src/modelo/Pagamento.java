@@ -3,7 +3,6 @@ package modelo;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Pagamento {
@@ -14,9 +13,6 @@ public class Pagamento {
 	private Double valorTotal;
 	private Integer quantidadeParcelas;
 	private TipoPagamento tipo;
-	
-	@OneToOne
-	private Venda venda;
 
 	public Long getId() {
 		return id;
@@ -48,14 +44,6 @@ public class Pagamento {
 
 	public void setTipo(TipoPagamento tipo) {
 		this.tipo = tipo;
-	}
-
-	public Venda getVenda() {
-		return venda;
-	}
-
-	public void setVenda(Venda venda) {
-		this.venda = venda;
 	}
 	
 	public Double getValorParcela() {

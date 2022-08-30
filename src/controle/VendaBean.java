@@ -49,6 +49,7 @@ public class VendaBean {
 	public void adicionarItem() {
 		Produto produto = produtoService.obtemPorId(idProdutoAtual);
 		item.setProduto(produto);
+		item.setValorUnitario(produto.getPreco());
 		venda.adicionarItem(item);
 		item = new ItemVenda();
 		idProdutoAtual = 0L;
@@ -59,6 +60,7 @@ public class VendaBean {
 			FacesContext.getCurrentInstance().
 			addMessage("msg", new FacesMessage("Não é possível finalizar uma venda sem itens!"));
 		} else {
+			venda.getPagamento().setValorTotal(venda.getTotalVenda());
 			vendaService.create(venda);
 			venda = new Venda();
 			idProdutoAtual = 0L;

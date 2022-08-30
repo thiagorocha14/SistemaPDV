@@ -20,10 +20,10 @@ public class Venda {
 	private String cpfCliente;
 	private Date dataVenda = new Date();
 	
-	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<ItemVenda> itens = new ArrayList<ItemVenda>();
 	
-	@OneToOne(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Pagamento pagamento = new Pagamento();
 
 	public Long getId() {

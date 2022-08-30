@@ -34,8 +34,6 @@
 				</p:selectOneMenu>
 				<p:outputLabel value="Quantidade:" for="qtde"/>
 				<p:inputText id="qtde" value="#{vendaBean.item.quantidade}"/>
-				<p:outputLabel value="Valor:" for="valor" />
-				<p:inputText id="valor" value="#{vendaBean.item.valorUnitario}"/>
 				<p:commandButton styleClass="botaoVermelho" value="Adicionar item" action="#{vendaBean.adicionarItem()}"
 					process="formProduto" update="formProduto, :totais"/>
 			</p:panelGrid>
