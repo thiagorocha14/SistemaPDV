@@ -10,7 +10,25 @@
 	<ui:define name="titulo">Página Inicial</ui:define>
 	
 	<ui:define name="conteudo">
-		<b>Bem vindo aos nosso sistema de Livraria</b>
+	<p:panel header="Filtros">
+		<h:form id="filtrosBusca">
+			<p:panelGrid columns="5">
+				<p:outputLabel for="pIni" value="Data inicial"/>
+            	<p:calendar id="pIni" value="#{vendaBean.data1}"/>
+            	<p:outputLabel for="pFim" value="Data inicial"/>
+            	<p:calendar id="pFim" value="#{vendaBean.data2}"/>
+            	<p:outputLabel for="tPag" value="Tipo pagamento"/>
+            	<p:selectOneMenu id="tPag" value="#{vendaBean.tipoPagamentoFiltro}">
+					<f:selectItem itemLabel="Todos" itemValue="" />
+					<f:selectItem itemLabel="Dinheiro" itemValue="0" />
+					<f:selectItem itemLabel="Cartão" itemValue="1" />
+				</p:selectOneMenu>
+				<p:commandButton styleClass="botaoVermelho" value="Gerar relatório" action="#{vendaBean.gerarRelatorio()}"
+					process="filtrosBusca" update="filtrosBusca"/>
+			</p:panelGrid>
+		</h:form>
+	</p:panel>
+		<b>Bem vindo ao gerador de relatório de vendas</b>
 	</ui:define>
 
 
