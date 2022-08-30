@@ -10,11 +10,18 @@
 	<ui:define name="titulo">Página Inicial</ui:define>
 	
 	<ui:define name="conteudo">
-		<b>Bem vindo aos nosso sistema de Livraria</b>
+		<p:fieldset legend="Produtos em baixa de estoque" toggleable="true" toggleSpeed="500" rendered="#{not empty produtoBean.produtosEmBaixa}">
+			<p:dataTable value="#{produtoBean.produtosEmBaixa}" var="produto" paginator="false">
+				<p:column headerText="Nome:">
+					<h:outputText value="#{produto.nome}" />
+				</p:column>
+				<p:column headerText="Quantidade">
+					<h:outputText value="#{produto.quantidade}"/>
+				</p:column>
+			</p:dataTable>		
+        </p:fieldset>
+		<b>Bem vindo aos nosso sistema de PDV</b>
 	</ui:define>
-
-
-
 </ui:composition>
 </body>
 

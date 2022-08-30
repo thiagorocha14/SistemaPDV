@@ -31,6 +31,11 @@
 		</p:panel>	 
 		<p:panel header="Lista">
 			<h:form id="lista">
+				<p:panelGrid columns="2">
+					<p:inputText id="pesquisa" value="#{produtoBean.filtroProduto}" placeholder="Filtrar por nome" />
+					<p:commandButton value="Filtrar" action="#{produtoBean.filtrarProdutos(produtoBean.filtroProduto)}"
+						process="lista, :msg" update="lista, :msg"/>
+				</p:panelGrid>
 				<p:dataTable value="#{produtoBean.produtos}" var="produtoAtual" paginatorPosition="top"
 						paginator="true" rows="5" rowsPerPageTemplate="2,5,10">
 					<p:column headerText="Código">
