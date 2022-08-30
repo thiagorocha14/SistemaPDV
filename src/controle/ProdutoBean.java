@@ -22,6 +22,9 @@ public class ProdutoBean {
 	
 	private Produto produto = new Produto();
 	private List<Produto> produtos = new ArrayList<Produto>();
+	private List<Produto> produtosEmBaixa = new ArrayList<Produto>();
+	
+	private String filtroProduto;
 	
 	@PostConstruct
 	protected void iniciar() {
@@ -48,6 +51,12 @@ public class ProdutoBean {
 		("msg1", new FacesMessage("Produto "+msg+" com Sucesso!"));
 	}
 	
+	public void filtrarProdutos(String nomeProduto) {
+		produtos = produtoService.retornaProdutosFiltradosPorNome(nomeProduto);
+		
+		FacesContext.getCurrentInstance().addMessage
+		("msg1", new FacesMessage("Produtos filtrados com Sucesso!"));
+	}
 	
 	public void carregarProduto(Produto a) {
 		produto = a;
@@ -74,6 +83,23 @@ public class ProdutoBean {
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
+	}
+
+	public List<Produto> getProdutosEmBaixa() {
+		produtosEmBaixa = produtoService.retornaProdutosEmBaixa();		
+		return produtosEmBaixa;
+	}
+
+	public void setProdutosEmBaixa(List<Produto> produtosEmBaixa) {
+		this.produtosEmBaixa = produtosEmBaixa;
+	}
+
+	public String getFiltroProduto() {
+		return filtroProduto;
+	}
+
+	public void setFiltroProduto(String filtroProduto) {
+		this.filtroProduto = filtroProduto;
 	}
 
 }
