@@ -23,6 +23,7 @@
 			<p:commandLink action="area-interna?faces-redirect=true" value="Área Interna"/>
 		</div>
 	</h3>
+	<p:growl life="5000" id="msg"/>
 	<p:panel header="Produtos">
 		<h:form id="formProduto">
 			<p:panelGrid columns="7">
@@ -57,12 +58,30 @@
 				</p:column>
 			</p:dataTable>
 			
+			<br />
 			<p:panelGrid columns="2">
+				<p:outputLabel value="Total Parcial da Venda:" for="totalParcialVenda"/>
+				<h:outputText id="totalParcialVenda" value="#{vendaBean.venda.totalVenda}"/>
 				<p:commandButton styleClass="botaoVermelho" value="Cancelar venda" action="#{vendaBean.gravar()}"
-					process="formProduto" update="formProduto"/>
-				<p:commandButton styleClass="botaoVermelho" value="Faturar venda" action="#{vendaBean.gravar()}"
-				process="formProduto" update="formProduto"/>
+					process="totais" update="totais"/>
+				<p:commandButton styleClass="botaoVermelho" value="Faturar venda" onclick="PF('finVenda').show();"/>
 			</p:panelGrid>
+			<p:dialog header="Finalizar venda" widgetVar="finVenda" modal="true" height="300">
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Total da Venda:" for="totalVenda"/>
+					<h:outputText id="totalVenda" value="#{vendaBean.venda.totalVenda}"/>
+					<p:outputLabel value="Documento Cliente:" for="doc"/>
+					<p:inputText id="doc" value="#{vendaBean.venda.cpfCliente}"/>
+					<p:outputLabel value="Forma de Pagamento" for="pag"/>
+					<p:selectOneMenu id="pag" value="#{vendaBean.venda.pagamento.tipo}">
+						<f:selectItems value="#{vendaBean.tipoPagamento}"/>
+					</p:selectOneMenu>
+					<p:outputLabel value="Quantidade Parcelas:" for="qtdeParc"/>
+					<p:inputText id="qtdeParc" value="#{vendaBean.venda.pagamento.quantidadeParcelas}"/>
+				    <p:commandButton styleClass="botaoVermelho" value="Concluir venda" action="#{vendaBean.gravar()}"
+					process="totais" update="totais"/>
+				</p:panelGrid>
+			</p:dialog>
 		</h:form>
 	</p:panel>
 </body> 

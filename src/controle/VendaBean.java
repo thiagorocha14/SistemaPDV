@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 
 import modelo.ItemVenda;
 import modelo.Produto;
+import modelo.TipoPagamento;
 import modelo.Venda;
 import service.ItemVendaService;
 import service.ProdutoService;
@@ -54,7 +55,16 @@ public class VendaBean {
 	}
 	
 	public void gravar() {
-		
+		if(venda.getItens().isEmpty()) {
+			FacesContext.getCurrentInstance().
+			addMessage("msg", new FacesMessage("Não é possível finalizar uma venda sem itens!"));
+		} else {
+			vendaService.create(venda);
+			venda = new Venda();
+			idProdutoAtual = 0L;
+			FacesContext.getCurrentInstance().
+			addMessage("msg", new FacesMessage("Livro Gravado com Sucesso!"));
+		}	
 	}
 
 	public Venda getVenda() {
@@ -89,7 +99,9 @@ public class VendaBean {
 		this.idProdutoAtual = idProdutoAtual;
 	}
 	
-	
+	public TipoPagamento[] getTipoPagamento(){
+		return TipoPagamento.values();
+	}
 	
 	
 

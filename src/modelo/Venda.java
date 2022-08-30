@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,13 +18,13 @@ public class Venda {
 	private Long id;
 	
 	private String cpfCliente;
-	private Date dataVenda;
+	private Date dataVenda = new Date();
 	
-	@OneToMany
+	@OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ItemVenda> itens = new ArrayList<ItemVenda>();
 	
-	@OneToOne
-	private Pagamento pagamento;
+	@OneToOne(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Pagamento pagamento = new Pagamento();
 
 	public Long getId() {
 		return id;

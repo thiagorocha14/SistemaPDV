@@ -17,11 +17,10 @@ public class ItemVenda {
 	private Integer quantidade;
 	private Double valorUnitario;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	private Produto produto;
 	
-	@ManyToOne
-	@JoinColumn(name="venda_id")
+	@ManyToOne(cascade=CascadeType.PERSIST)
     private Venda venda;
 
 	public Long getId() {
