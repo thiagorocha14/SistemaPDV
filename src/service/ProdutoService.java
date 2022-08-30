@@ -41,5 +41,16 @@ public class ProdutoService extends GenericService<Produto>{
     	produtos = getEntityManager().createQuery(cq).getResultList();
 		return produtos;
 	}
+	
+	public Produto obtemPorCodigo(String codigo){
+		final CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();	
+    	final CriteriaQuery<Produto> cq = cb.createQuery(Produto.class);
+    	final Root<Produto> rProduto = cq.from(Produto.class);
+		
+		cq.select(rProduto);
+		cq.where(cb.equal(rProduto.<String>get("codigo"), codigo));
+		Produto produto = getEntityManager().createQuery(cq).getSingleResult();
+		return produto;	
+	}
 
 }

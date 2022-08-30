@@ -27,15 +27,12 @@
 	<p:panel header="Produtos">
 		<h:form id="formProduto">
 			<p:panelGrid columns="7">
-				<p:outputLabel value="Selecione o produto:" for="produtos" />
-				<p:selectOneMenu id="produtos" value="#{vendaBean.idProdutoAtual}">
-					<f:selectItems value="#{vendaBean.produtos}" var="produtoAtual"
-						itemLabel="#{produtoAtual.nome}" itemValue="#{produtoAtual.id}" />
-				</p:selectOneMenu>
+				<p:outputLabel value="Código do Produto:" for="produtos" />
+				<p:inputText id="produtos" value="#{vendaBean.codigoProdutoAtual}"/>
 				<p:outputLabel value="Quantidade:" for="qtde"/>
 				<p:inputText id="qtde" value="#{vendaBean.item.quantidade}"/>
 				<p:commandButton styleClass="botaoVermelho" value="Adicionar item" action="#{vendaBean.adicionarItem()}"
-					process="formProduto" update="formProduto, :totais"/>
+					process="formProduto, :msg" update="formProduto, :totais, :msg"/>
 			</p:panelGrid>
 		</h:form>
 	</p:panel>
@@ -60,7 +57,7 @@
 			<p:panelGrid columns="2">
 				<p:outputLabel value="Total Parcial da Venda:" for="totalParcialVenda"/>
 				<h:outputText id="totalParcialVenda" value="#{vendaBean.venda.totalVenda}"/>
-				<p:commandButton styleClass="botaoVermelho" value="Cancelar venda" action="#{vendaBean.gravar()}"
+				<p:commandButton styleClass="botaoVermelho" value="Cancelar venda" action="#{vendaBean.cancelar()}"
 					process="totais" update="totais"/>
 				<p:commandButton styleClass="botaoVermelho" value="Faturar venda" onclick="PF('finVenda').show();"/>
 			</p:panelGrid>

@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.persistence.NoResultException;
 
 import modelo.ItemVenda;
 import modelo.Produto;
@@ -35,7 +36,7 @@ public class VendaBean {
 	private ItemVenda item = new ItemVenda();
 	
 	private List<Produto> produtos = new ArrayList<Produto>();
-	private Long idProdutoAtual = 0L;
+	private String codigoProdutoAtual = "";
 	
 	@PostConstruct
 	protected void iniciar() {
@@ -47,25 +48,43 @@ public class VendaBean {
 	}
 	
 	public void adicionarItem() {
-		Produto produto = produtoService.obtemPorId(idProdutoAtual);
-		item.setProduto(produto);
-		item.setValorUnitario(produto.getPreco());
-		venda.adicionarItem(item);
+		try{
+			if (codigoProdutoAtual.isEmpty()) {
+				FacesContext.getCurrentInstance().
+				addMessage("msg1", new FacesMessage("É necessário informar um produto!"));
+			} else {
+				
+					Produto produto = produtoService.obtemPorCodigo(codigoProdutoAtual);
+					item.setProduto(produto);
+					item.setValorUnitario(produto.getPreco());
+					venda.adicionarItem(item);
+					item = new ItemVenda();
+					codigoProdutoAtual = "";
+					
+			}
+		} catch (NoResultException nre){
+			FacesContext.getCurrentInstance().
+			addMessage("msg1", new FacesMessage("Nenhum produto encontrado com esse código!"));
+		}
+	}
+	
+	public void cancelar() {
+		venda = new Venda();
 		item = new ItemVenda();
-		idProdutoAtual = 0L;
+		codigoProdutoAtual = "";
 	}
 	
 	public void gravar() {
 		if(venda.getItens().isEmpty()) {
 			FacesContext.getCurrentInstance().
-			addMessage("msg", new FacesMessage("Não é possível finalizar uma venda sem itens!"));
+			addMessage("msg1", new FacesMessage("Não é possível finalizar uma venda sem itens!"));
 		} else {
 			venda.getPagamento().setValorTotal(venda.getTotalVenda());
 			vendaService.create(venda);
 			venda = new Venda();
-			idProdutoAtual = 0L;
+			codigoProdutoAtual = "";
 			FacesContext.getCurrentInstance().
-			addMessage("msg", new FacesMessage("Livro Gravado com Sucesso!"));
+			addMessage("msg1", new FacesMessage("Livro Gravado com Sucesso!"));
 		}	
 	}
 
@@ -93,12 +112,12 @@ public class VendaBean {
 		this.produtos = produtos;
 	}
 
-	public Long getIdProdutoAtual() {
-		return idProdutoAtual;
+	public String getCodigoProdutoAtual() {
+		return codigoProdutoAtual;
 	}
 
-	public void setIdProdutoAtual(Long idProdutoAtual) {
-		this.idProdutoAtual = idProdutoAtual;
+	public void setCodigoProdutoAtual(String codigoProdutoAtual) {
+		this.codigoProdutoAtual = codigoProdutoAtual;
 	}
 	
 	public TipoPagamento[] getTipoPagamento(){
