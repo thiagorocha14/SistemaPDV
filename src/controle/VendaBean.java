@@ -1,6 +1,7 @@
 package controle;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -37,6 +38,11 @@ public class VendaBean {
 	private List<Produto> produtos = new ArrayList<Produto>();
 	private Long idProdutoAtual = 0L;
 	
+	private Date data1;
+	private Date data2;
+	
+	private String tipoPagamentoFiltro;
+	
 	@PostConstruct
 	protected void iniciar() {
 		listarProdutos();
@@ -67,6 +73,10 @@ public class VendaBean {
 			FacesContext.getCurrentInstance().
 			addMessage("msg", new FacesMessage("Livro Gravado com Sucesso!"));
 		}	
+	}
+	
+	public void gerarRelatorio() {
+		
 	}
 
 	public Venda getVenda() {
@@ -103,6 +113,30 @@ public class VendaBean {
 	
 	public TipoPagamento[] getTipoPagamento(){
 		return TipoPagamento.values();
+	}
+
+	public Date getData1() {
+		return data1;
+	}
+
+	public void setData1(Date data1) {
+		this.data1 = data1;
+	}
+
+	public Date getData2() {
+		return data2;
+	}
+
+	public void setData2(Date data2) {
+		this.data2 = data2;
+	}
+
+	public String getTipoPagamentoFiltro() {
+		return tipoPagamentoFiltro;
+	}
+
+	public void setTipoPagamentoFiltro(String tipoPagamentoFiltro) {
+		this.tipoPagamentoFiltro = tipoPagamentoFiltro;
 	}
 	
 	
